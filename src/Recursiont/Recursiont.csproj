@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <Title>Recursion't</Title>
+    <Product>$(Title)</Product>
+    <Authors>Theodore Tsirpanis</Authors>
+    <Description>A library that allows writing infinitely deep recursive functions in C# without blowing up the stack.</Description>
+    <PackageProjectUrl>https://github.com/teo-tsirpanis/Recursiont</PackageProjectUrl>
+    <PackageTags>recursion</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
