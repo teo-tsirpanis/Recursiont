@@ -6,5 +6,8 @@
 namespace System.Runtime.CompilerServices;
 
 [AttributeUsage(AttributeTargets.Parameter)]
-internal sealed class CallerArgumentExpressionAttribute : Attribute { }
+internal sealed class CallerArgumentExpressionAttribute : Attribute
+{
+    public CallerArgumentExpressionAttribute(string parameterName) { }
+}
 #endif
