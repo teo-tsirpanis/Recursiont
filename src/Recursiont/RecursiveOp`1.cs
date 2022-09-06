@@ -39,6 +39,16 @@ public readonly struct RecursiveOp<TResult>
         }
     }
 
+    internal RecursiveRunner Runner
+    {
+        get
+        {
+            // Should not be called on completed ops.
+            Debug.Assert(_taskOrEdi is RecursiveTask<TResult>);
+            return ((RecursiveTask<TResult>)_taskOrEdi!).Runner;
+        }
+    }
+
     internal RecursiveOp(TResult result)
     {
         _result = result;
