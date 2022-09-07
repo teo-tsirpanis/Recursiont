@@ -19,6 +19,7 @@ namespace Recursiont;
 /// <see langword="await"/>ed immediately.
 /// </remarks>
 /// <seealso cref="RecursiveOp{TResult}"/>
+[AsyncMethodBuilder(typeof(AsyncRecursiveOpMethodBuilder))]
 public readonly struct RecursiveOp
 {
     // Can be null, an ExceptionDispatchInfo, or a RecursiveTask.
@@ -74,6 +75,8 @@ public readonly struct RecursiveOp
         return new(ExceptionDispatchInfo.Capture(exception), 0);
     }
 
+    internal static RecursiveOp FromException(ExceptionDispatchInfo edi) => new(edi, 0);
+
     /// <summary>
     /// Creates a <see cref="RecursiveOp{TResult}"/> that has completed with the specified <see cref="Exception"/>.
     /// </summary>
@@ -85,6 +88,8 @@ public readonly struct RecursiveOp
         ArgumentNullExceptionCompat.ThrowIfNull(exception);
         return new(ExceptionDispatchInfo.Capture(exception), 0);
     }
+
+    internal static RecursiveOp<TResult> FromException<TResult>(ExceptionDispatchInfo edi) => new(edi, 0);
 
     /// <summary>
     /// Creates a <see cref="RecursiveOp{TResult}"/> that has completed

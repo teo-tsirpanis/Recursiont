@@ -17,6 +17,7 @@ namespace Recursiont;
 /// This type shares the same samantics with <see cref="RecursiveOp"/>.
 /// </remarks>
 /// <seealso cref="RecursiveOp"/>
+[AsyncMethodBuilder(typeof(AsyncRecursiveOpMethodBuilder<>))]
 public readonly struct RecursiveOp<TResult>
 {
     // Can be null, an ExceptionDispatchInfo, or a RecursiveTask<TResult>.
