@@ -17,6 +17,10 @@ internal static class ThrowHelpers
         throw new InvalidOperationException("Cannot mix RecursiveOps originating from multiple RecursiveRunners. This error likely originated due to RecursiveOps escaping the scope of a method, which is not supported.");
 
     [DoesNotReturn]
+    public static void ThrowNoCurrentRunner() =>
+        throw new NotSupportedException("No RecursiveRunner is assigned to the current thread.");
+
+    [DoesNotReturn]
     public static void ThrowRecursiveOpMultipleAwaits() =>
         throw new InvalidOperationException("The RecursiveOp was tried to be used in an invalid way, likely originating due to multiple awaits, which are not allowed.");
 

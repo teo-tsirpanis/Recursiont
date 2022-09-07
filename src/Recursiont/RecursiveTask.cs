@@ -107,7 +107,7 @@ internal abstract class RecursiveTask : RecursiveWorkItem
 
     internal void UnsafeOnCompleted(RecursiveWorkItem continuation, ushort token)
     {
-        ValidateSameRunners(continuation);
+        Runner.ValidateSameRunner(continuation.Runner);
         ValidateToken(token);
         RecursiveWorkItem? previousContinuation = Interlocked.CompareExchange(ref _continuation, continuation, null);
         if (previousContinuation is not null)
@@ -118,14 +118,6 @@ internal abstract class RecursiveTask : RecursiveWorkItem
         if (IsCompleted)
         {
             Runner.QueueWorkItem(_continuation);
-        }
-    }
-
-    private void ValidateSameRunners(RecursiveWorkItem workItem)
-    {
-        if (workItem.Runner != Runner)
-        {
-            ThrowHelpers.ThrowMixedRunners();
         }
     }
 
