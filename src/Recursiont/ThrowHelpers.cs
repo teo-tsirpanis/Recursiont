@@ -18,7 +18,7 @@ internal static class ThrowHelpers
 
     [DoesNotReturn]
     public static void ThrowNoCurrentRunner() =>
-        throw new NotSupportedException("No RecursiveRunner is assigned to the current thread.");
+        throw new NotSupportedException("Async methods that return RecursiveOp cannot be called outside RecursiveRunner.Run.");
 
     [DoesNotReturn]
     public static void ThrowRecursiveOpMultipleAwaits() =>

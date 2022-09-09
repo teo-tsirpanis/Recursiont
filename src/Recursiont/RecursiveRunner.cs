@@ -9,7 +9,7 @@ namespace Recursiont;
 /// <summary>
 /// Safely runs infintely recursive functions.
 /// </summary>
-public class RecursiveRunner
+public partial class RecursiveRunner
 {
     /// <summary>
     /// The <see cref="RecursiveRunner"/> object assigned to the current thread.
