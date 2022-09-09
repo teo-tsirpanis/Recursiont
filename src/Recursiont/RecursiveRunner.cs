@@ -32,6 +32,57 @@ public class RecursiveRunner
         return runner;
     }
 
+    private void Reset()
+    {
+        _workItemsToRun.Clear();
+    }
+
+    private void Evaluate(RecursiveOp op)
+    {
+        try
+        {
+            Debug.Assert(t_currentRunner == this);
+
+            if (!op.IsCompleted)
+            {
+                RunWorkItemsUntilTaskCompletes(op.UnderlyingTask);
+            }
+
+            op.GetAwaiter().GetResult();
+        }
+        finally
+        {
+            Reset();
+        }
+    }
+
+    private TResult Evaluate<TResult>(RecursiveOp<TResult> op)
+    {
+        try
+        {
+            Debug.Assert(t_currentRunner == this);
+
+            if (!op.IsCompleted)
+            {
+                RunWorkItemsUntilTaskCompletes(op.UnderlyingTask);
+            }
+
+            return op.GetAwaiter().GetResult();
+        }
+        finally
+        {
+            Reset();
+        }
+    }
+
+    private void RunWorkItemsUntilTaskCompletes(RecursiveTask task)
+    {
+        while (!task.IsCompleted && _workItemsToRun.TryPop(out RecursiveWorkItem? workItem))
+        {
+            workItem.Run();
+        }
+    }
+
     internal void QueueWorkItem(RecursiveWorkItem workItem)
     {
         Debug.Assert(workItem.Runner == this);

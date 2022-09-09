@@ -30,7 +30,7 @@ internal abstract class RecursiveTask : RecursiveWorkItem
     protected ushort Token { get; private set; }
 
     [MemberNotNullWhen(true, nameof(_completionObject))]
-    protected bool IsCompleted => _completionObject is not null;
+    internal bool IsCompleted => _completionObject is not null;
 
     internal RecursiveTask(RecursiveRunner runner) : base(runner) { }
 

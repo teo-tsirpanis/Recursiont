@@ -4,6 +4,7 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 
@@ -31,6 +32,7 @@ public readonly struct RecursiveOp
     /// </summary>
     public static RecursiveOp CompletedOp => default;
 
+    [MemberNotNullWhen(false, nameof(UnderlyingTask))]
     internal bool IsCompleted
     {
         get
@@ -55,6 +57,8 @@ public readonly struct RecursiveOp
             return ((RecursiveTask)_taskOrEdi!).Runner;
         }
     }
+
+    internal RecursiveTask? UnderlyingTask => _taskOrEdi as RecursiveTask;
 
     internal RecursiveOp(object taskOrEdi, ushort token)
     {
