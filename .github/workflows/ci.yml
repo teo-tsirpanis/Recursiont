@@ -1,0 +1,39 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2.1.0
+      - name: Run tests (Debug)
+        uses: zyborg/dotnet-tests-report@v1
+        with:
+          project_path: tests/Recursiont.Tests
+          msbuild_configuration: Debug
+          report_name: recursiont_tests_debug
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # We need to run the tests in both Debug and release mode to uncover
+      # possible subtle bugs around the state machines being classes vs structs.
+      - name: Run tests (Release)
+        uses: zyborg/dotnet-tests-report@v1
+        with:
+          project_path: tests/Recursiont.Tests
+          msbuild_configuration: Release
+          report_name: recursiont_tests_release
+          github_token: ${{ secrets.GITHUB_TOKEN }}
