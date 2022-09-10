@@ -3,6 +3,7 @@
 // See LICENSE in the repository root for more information.
 
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Recursiont;
 
@@ -20,7 +21,7 @@ public partial class RecursiveRunner
     [ThreadStatic]
     private static RecursiveRunner? t_currentRunner;
 
-    private readonly Stack<RecursiveWorkItem> _workItemsToRun = new();
+    private RecursiveWorkItem? _nextWorkItem;
 
     internal static RecursiveRunner GetCurrentRunner()
     {
@@ -34,7 +35,7 @@ public partial class RecursiveRunner
 
     private void Reset()
     {
-        _workItemsToRun.Clear();
+        _nextWorkItem = null;
     }
 
     private void Evaluate(RecursiveOp op)
@@ -77,9 +78,10 @@ public partial class RecursiveRunner
 
     private void RunWorkItemsUntilTaskCompletes(RecursiveTask task)
     {
-        while (!task.IsCompleted && _workItemsToRun.TryPop(out RecursiveWorkItem? workItem))
+        while (!task.IsCompleted && _nextWorkItem is RecursiveWorkItem nextWorkItem)
         {
-            workItem.Run();
+            _nextWorkItem = null;
+            nextWorkItem.Run();
         }
     }
 
