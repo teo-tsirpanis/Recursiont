@@ -76,7 +76,7 @@ public partial class RecursiveRunner
         }
     }
 
-    internal void QueueWorkItem(RecursiveWorkItem workItem)
+    internal void QueueWorkItem(RecursiveWorkItem workItem, bool yielding = false)
     {
         Debug.Assert(workItem.Runner == this);
         if (_nextWorkItem != null)
@@ -84,6 +84,14 @@ public partial class RecursiveRunner
             ThrowHelpers.ThrowMustImmediatelyAwait();
         }
 
+        // If we are running a task's continuation we might have enough
+        // stack space to directly run it instead of queueing it.
+        // This optimization has to be disabled when awaiting RecursiveOp.Yield().
+        if (!yielding && RuntimeHelpersCompat.TryEnsureSufficientExecutionStack())
+        {
+            workItem.Run();
+            return;
+        }
         _nextWorkItem = workItem;
     }
 

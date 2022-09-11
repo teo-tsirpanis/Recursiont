@@ -40,5 +40,5 @@ internal readonly struct YieldAwaiter : IRecursiveCompletion
         ThrowHelpers.ThrowCannotAwaitOutsideRecursiveFunction();
 
     void IRecursiveCompletion.UnsafeOnCompleted(RecursiveWorkItem workItem) =>
-        _runner.QueueWorkItem(workItem);
+        _runner.QueueWorkItem(workItem, yielding: true);
 }
