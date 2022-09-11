@@ -76,6 +76,17 @@ public partial class RecursiveRunner
         }
     }
 
+    internal void QueueWorkItem(RecursiveWorkItem workItem)
+    {
+        Debug.Assert(workItem.Runner == this);
+        if (_nextWorkItem != null)
+        {
+            ThrowHelpers.ThrowMustImmediatelyAwait();
+        }
+
+        _nextWorkItem = workItem;
+    }
+
     private void RunWorkItemsUntilTaskCompletes(RecursiveTask task)
     {
         while (!task.IsCompleted && _nextWorkItem is RecursiveWorkItem nextWorkItem)
@@ -83,12 +94,6 @@ public partial class RecursiveRunner
             _nextWorkItem = null;
             nextWorkItem.Run();
         }
-    }
-
-    internal void QueueWorkItem(RecursiveWorkItem workItem)
-    {
-        Debug.Assert(workItem.Runner == this);
-        _workItemsToRun.Push(workItem);
     }
 
     private CurrentRunnerScope SetCurrentRunner() => new(this);

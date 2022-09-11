@@ -39,6 +39,24 @@ internal class RecursiveRunnerTests
     }
 
     [Test]
+    public void EnforcesAwaitingImmediately()
+    {
+        Assert.Throws<InvalidOperationException>(() => new RecursiveRunner().Run(Impl, true));
+
+        static async RecursiveOp Impl(bool doRecurse)
+        {
+            await RecursiveOp.Yield();
+
+            if (!doRecurse)
+            {
+                return;
+            }
+            _ = Impl(false);
+            await Impl(false);
+        }
+    }
+
+    [Test]
     public void RunOverloadsAvailable()
     {
         RecursiveRunner runner = new();

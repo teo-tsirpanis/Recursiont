@@ -132,4 +132,21 @@ public readonly struct RecursiveOp
         // completed and we should not have called this function.
         ThrowHelpers.ThrowRecursiveOpInvalidUse();
     }
+
+    /// <summary>
+    /// Forces the recursive function execution to be yielded
+    /// to the <see cref="RecursiveRunner"/>'s dispatch loop.
+    /// Only test code needs this.
+    /// </summary>
+    /// <remarks>
+    /// When an <see langword="async"/> recursive method gets called,
+    /// two things may happen. If the thread has enough stack space,
+    /// it immediately calls the method body. But if the stack space
+    /// is not enough, the method's compiler-generated state machine
+    /// gets moved to the heap in a <see cref="RecursiveTask"/> object
+    /// and that object gets sent to the <see cref="RecursiveRunner"/>
+    /// to execute it after the stack empties. This function forces
+    /// this process to happen regardless of the remaining stack.
+    /// </remarks>
+    internal static Infrastructure.YieldAwaitable Yield() => new(RecursiveRunner.GetCurrentRunner());
 }
