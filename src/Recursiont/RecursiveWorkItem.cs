@@ -6,12 +6,5 @@ namespace Recursiont;
 
 internal abstract class RecursiveWorkItem
 {
-    public RecursiveRunner Runner { get; }
-
-    internal RecursiveWorkItem(RecursiveRunner runner)
-    {
-        Runner = runner;
-    }
-
     internal abstract void Run();
 }

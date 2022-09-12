@@ -32,7 +32,12 @@ internal abstract class RecursiveTask : RecursiveWorkItem
     [MemberNotNullWhen(true, nameof(_completionObject))]
     internal bool IsCompleted => _completionObject is not null;
 
-    internal RecursiveTask(RecursiveRunner runner) : base(runner) { }
+    private readonly RecursiveRunner _runner;
+
+    internal RecursiveTask(RecursiveRunner runner)
+    {
+        _runner = runner;
+    }
 
     internal RecursiveOp AsRecursiveOp() => new(this, Token);
 
@@ -67,7 +72,7 @@ internal abstract class RecursiveTask : RecursiveWorkItem
     {
         if (_continuation is RecursiveWorkItem continuation)
         {
-            Runner.QueueWorkItem(continuation);
+            _runner.QueueWorkItem(continuation);
         }
     }
 
@@ -107,7 +112,6 @@ internal abstract class RecursiveTask : RecursiveWorkItem
 
     internal void UnsafeOnCompleted(RecursiveWorkItem continuation, ushort token)
     {
-        Runner.ValidateSameRunner(continuation.Runner);
         ValidateToken(token);
         RecursiveWorkItem? previousContinuation = Interlocked.CompareExchange(ref _continuation, continuation, null);
         if (previousContinuation is not null)
@@ -117,7 +121,7 @@ internal abstract class RecursiveTask : RecursiveWorkItem
 
         if (IsCompleted)
         {
-            Runner.QueueWorkItem(_continuation);
+            _runner.QueueWorkItem(_continuation);
         }
     }
 

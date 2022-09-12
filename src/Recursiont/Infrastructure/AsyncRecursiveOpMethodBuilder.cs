@@ -54,7 +54,6 @@ public struct AsyncRecursiveOpMethodBuilder
     public void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
         where TAwaiter : IRecursiveCompletion where TStateMachine : IAsyncStateMachine
     {
-        _runner.ValidateSameRunner(awaiter.Runner);
         RecursiveTask stateMachineBox = AsyncRecursiveOpMethodBuilder<VoidOpResult>.GetStateMachineBox(ref stateMachine, ref _task, _runner);
         awaiter.UnsafeOnCompleted(stateMachineBox);
     }

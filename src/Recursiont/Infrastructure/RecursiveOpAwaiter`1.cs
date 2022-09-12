@@ -32,8 +32,6 @@ public readonly struct RecursiveOpAwaiter<TResult> : IRecursiveCompletion
     void ICriticalNotifyCompletion.UnsafeOnCompleted(Action continuation) =>
         ThrowHelpers.ThrowCannotAwaitOutsideRecursiveFunction();
 
-    RecursiveRunner IRecursiveCompletion.Runner => _op.Runner;
-
     void IRecursiveCompletion.UnsafeOnCompleted(RecursiveWorkItem workItem) =>
         _op.UnsafeOnCompleted(workItem);
 }

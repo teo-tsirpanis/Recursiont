@@ -48,16 +48,6 @@ public readonly struct RecursiveOp
         }
     }
 
-    internal RecursiveRunner Runner
-    {
-        get
-        {
-            // Should not be called on completed ops.
-            Debug.Assert(_taskOrEdi is RecursiveTask);
-            return ((RecursiveTask)_taskOrEdi!).Runner;
-        }
-    }
-
     internal RecursiveTask? UnderlyingTask => _taskOrEdi as RecursiveTask;
 
     internal RecursiveOp(object taskOrEdi, ushort token)
