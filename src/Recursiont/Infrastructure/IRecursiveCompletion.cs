@@ -19,5 +19,7 @@ namespace Recursiont.Infrastructure;
 public interface IRecursiveCompletion : ICriticalNotifyCompletion
 {
     // These two methods must be called only if the awaiter has not completed.
+    internal RecursiveRunner Runner { get; }
+
     internal void UnsafeOnCompleted(RecursiveWorkItem workItem);
 }

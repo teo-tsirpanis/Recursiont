@@ -31,6 +31,8 @@ internal readonly struct YieldAwaiter : IRecursiveCompletion
 
     public void GetResult() { }
 
+    RecursiveRunner IRecursiveCompletion.Runner => _runner;
+
     void INotifyCompletion.OnCompleted(Action continuation) =>
         ThrowHelpers.ThrowCannotAwaitOutsideRecursiveFunction();
 

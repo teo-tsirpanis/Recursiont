@@ -78,6 +78,7 @@ public partial class RecursiveRunner
 
     internal void QueueWorkItem(RecursiveWorkItem workItem, bool yielding = false)
     {
+        Debug.Assert(workItem.Runner == this);
         if (_nextWorkItem != null)
         {
             ThrowHelpers.ThrowMustImmediatelyAwait();
@@ -104,6 +105,14 @@ public partial class RecursiveRunner
     }
 
     private CurrentRunnerScope SetCurrentRunner() => new(this);
+
+    internal void ValidateSameRunner(RecursiveRunner otherRunner)
+    {
+        if (otherRunner != this)
+        {
+            ThrowHelpers.ThrowMixedRunners();
+        }
+    }
 
     private readonly struct CurrentRunnerScope : IDisposable
     {
