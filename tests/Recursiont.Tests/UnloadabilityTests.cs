@@ -42,6 +42,6 @@ internal class UnloadabilityTests
 
     private static void TestRecursiveMethod()
     {
-        new RecursiveRunner().Run(async () => await RecursiveOp.Yield());
+        RecursiveRunner.Run(async () => await RecursiveOp.Yield());
     }
 }

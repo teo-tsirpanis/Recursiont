@@ -13,6 +13,12 @@ namespace Recursiont;
 public partial class RecursiveRunner
 {
     /// <summary>
+    /// A cached per-thread <see cref="RecursiveRunner"/> object.
+    /// </summary>
+    [ThreadStatic]
+    private static RecursiveRunner? t_cachedRunner;
+
+    /// <summary>
     /// The <see cref="RecursiveRunner"/> object assigned to the current thread.
     /// </summary>
     /// <remarks>
@@ -22,6 +28,8 @@ public partial class RecursiveRunner
     private static RecursiveRunner? t_currentRunner;
 
     private RecursiveWorkItem? _nextWorkItem;
+
+    private RecursiveRunner() { }
 
     internal static RecursiveRunner GetCurrentRunner()
     {
@@ -36,6 +44,7 @@ public partial class RecursiveRunner
     private void Reset()
     {
         _nextWorkItem = null;
+        t_cachedRunner ??= this;
     }
 
     private void Evaluate(RecursiveOp op)
@@ -95,6 +104,20 @@ public partial class RecursiveRunner
         _nextWorkItem = workItem;
     }
 
+    private static RecursiveRunner RentFromCache()
+    {
+        RecursiveRunner? runner = t_cachedRunner;
+        if (runner is not null)
+        {
+            t_cachedRunner = null;
+        }
+        else
+        {
+            runner = new();
+        }
+        return runner;
+    }
+
     private void RunWorkItemsUntilTaskCompletes(RecursiveTask task)
     {
         while (!task.IsCompleted && _nextWorkItem is RecursiveWorkItem nextWorkItem)
@@ -104,7 +127,7 @@ public partial class RecursiveRunner
         }
     }
 
-    private CurrentRunnerScope SetCurrentRunner() => new(this);
+    private static CurrentRunnerScope SetupRunnerFrame() => new(RentFromCache());
 
     internal void ValidateSameRunner(RecursiveRunner otherRunner)
     {
@@ -118,11 +141,13 @@ public partial class RecursiveRunner
     {
         private readonly RecursiveRunner? _previousRunner;
 
+        public RecursiveRunner Runner { get; }
+
         public CurrentRunnerScope(RecursiveRunner runner)
         {
             ref RecursiveRunner? currentRunner = ref t_currentRunner;
             _previousRunner = currentRunner;
-            currentRunner = runner;
+            currentRunner = Runner = runner;
         }
 
         public void Dispose() => t_currentRunner = _previousRunner;

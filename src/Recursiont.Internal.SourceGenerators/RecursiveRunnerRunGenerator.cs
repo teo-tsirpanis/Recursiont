@@ -45,15 +45,15 @@ public sealed class RecursiveRunnerRunGenerator : IIncrementalGenerator
         string returnType = returnsResult ? ResultGenericType : "void";
         string funcParamName = returnsResult ? "recursiveFunc" : "recursiveAction";
         writer.WriteLine($"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-        using (EnterBlock(writer, $"public {returnType} Run{methodGenericParams}(Func<{funcGenericParams}> {funcParamName}{funcArgumentDefinitions})"))
+        using (EnterBlock(writer, $"public static {returnType} Run{methodGenericParams}(Func<{funcGenericParams}> {funcParamName}{funcArgumentDefinitions})"))
         {
             writer.WriteLine($"ArgumentNullExceptionCompat.ThrowIfNull({funcParamName});");
             writer.WriteLine();
-            using (EnterBlock(writer, $"using (SetCurrentRunner())"))
+            using (EnterBlock(writer, $"using (var ctx = SetupRunnerFrame())"))
             {
                 string returnMaybe = returnsResult ? "return " : string.Empty;
                 string funcArguments = string.Join(", ", argumentIndices.Select(static x => $"arg{x}"));
-                writer.WriteLine($"{returnMaybe} Evaluate({funcParamName}({funcArguments}));");
+                writer.WriteLine($"{returnMaybe} ctx.Runner.Evaluate({funcParamName}({funcArguments}));");
             }
         }
     }
