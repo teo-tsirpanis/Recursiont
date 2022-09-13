@@ -137,10 +137,22 @@ public struct AsyncRecursiveOpMethodBuilder<TResult>
 
     private sealed class StateMachineBox<TStateMachine> : RecursiveTask<TResult> where TStateMachine : IAsyncStateMachine
     {
-        private static readonly ConcurrentBag<StateMachineBox<TStateMachine>> s_pool = new();
+        private static readonly ConcurrentBag<StateMachineBox<TStateMachine>> s_pool = InitializePoolAndTrimming();
 
         public TStateMachine? StateMachine;
         public ExecutionContext? Context;
+
+        private static ConcurrentBag<StateMachineBox<TStateMachine>> InitializePoolAndTrimming()
+        {
+            ConcurrentBag<StateMachineBox<TStateMachine>> pool = new();
+            Gen2GcCallback.Register(static x =>
+            {
+                var pool = (ConcurrentBag<StateMachineBox<TStateMachine>>)x;
+                int itemsToRemove = pool.Count / 2;
+                for (int i = 0; i < itemsToRemove && pool.TryTake(out _); i++) ;
+            }, pool);
+            return pool;
+        }
 
         public static StateMachineBox<TStateMachine> RentFromPool()
         {
