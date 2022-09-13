@@ -10,7 +10,10 @@ namespace Recursiont;
 /// <summary>
 /// Safely runs infintely recursive functions.
 /// </summary>
-public sealed partial class RecursiveRunner
+#if RECURSIONT
+public
+#endif
+sealed partial class RecursiveRunner
 {
     /// <summary>
     /// A cached per-thread <see cref="RecursiveRunner"/> object.

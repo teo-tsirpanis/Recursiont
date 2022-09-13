@@ -15,7 +15,10 @@ namespace Recursiont.Infrastructure;
 /// that return <see cref="RecursiveOp{TResult}"/>.
 /// </summary>
 /// <typeparam name="TResult">The type the recursive op returns.</typeparam>
-public struct AsyncRecursiveOpMethodBuilder<TResult>
+#if RECURSIONT
+public
+#endif
+struct AsyncRecursiveOpMethodBuilder<TResult>
 {
     private TResult? _result;
 

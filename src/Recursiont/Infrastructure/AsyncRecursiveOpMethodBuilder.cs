@@ -13,7 +13,10 @@ namespace Recursiont.Infrastructure;
 /// Used by the compiler to implement <see langword="async"/>
 /// methods that return <see cref="RecursiveOp"/>.
 /// </summary>
-public struct AsyncRecursiveOpMethodBuilder
+#if RECURSIONT
+public
+#endif
+struct AsyncRecursiveOpMethodBuilder
 {
     private readonly RecursiveRunner _runner;
 

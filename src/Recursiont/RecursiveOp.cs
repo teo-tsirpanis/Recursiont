@@ -21,7 +21,10 @@ namespace Recursiont;
 /// </remarks>
 /// <seealso cref="RecursiveOp{TResult}"/>
 [AsyncMethodBuilder(typeof(AsyncRecursiveOpMethodBuilder))]
-public readonly struct RecursiveOp
+#if RECURSIONT
+public
+#endif
+readonly struct RecursiveOp
 {
     // Can be null, an ExceptionDispatchInfo, or a RecursiveTask.
     internal readonly object? _taskOrEdi;

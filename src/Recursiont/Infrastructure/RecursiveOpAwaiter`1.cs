@@ -14,7 +14,10 @@ using System.Runtime.ExceptionServices;
 /// pattern for <see cref="RecursiveOp{TResult}"/>.
 /// </summary>
 /// <typeparam name="TResult">The type the recursive op returns.</typeparam>
-public readonly struct RecursiveOpAwaiter<TResult> : IRecursiveCompletion
+#if RECURSIONT
+public
+#endif
+readonly struct RecursiveOpAwaiter<TResult> : IRecursiveCompletion
 {
     private readonly RecursiveOp<TResult> _op;
 

@@ -19,7 +19,10 @@ namespace Recursiont;
 /// </remarks>
 /// <seealso cref="RecursiveOp"/>
 [AsyncMethodBuilder(typeof(AsyncRecursiveOpMethodBuilder<>))]
-public readonly struct RecursiveOp<TResult>
+#if RECURSIONT
+public
+#endif
+readonly struct RecursiveOp<TResult>
 {
     // Can be null, an ExceptionDispatchInfo, or a RecursiveTask<TResult>.
     internal readonly TResult? _result;

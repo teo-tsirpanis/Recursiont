@@ -103,7 +103,7 @@ public sealed class RecursiveRunnerRunGenerator : IIncrementalGenerator
         writer.WriteLine();
         writer.WriteLine("namespace Recursiont;");
         writer.WriteLine();
-        using (EnterBlock(writer, "public partial class RecursiveRunner"))
+        using (EnterBlock(writer, "partial class RecursiveRunner"))
         {
             for (int i = 0; i <= s_numberInfo.Length - 1; i++)
             {

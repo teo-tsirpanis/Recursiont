@@ -13,7 +13,10 @@ using System.Runtime.ExceptionServices;
 /// Used by the compiler to implement the <see langword="await"/>
 /// pattern for <see cref="RecursiveOp"/>.
 /// </summary>
-public readonly struct RecursiveOpAwaiter : IRecursiveCompletion
+#if RECURSIONT
+public
+#endif
+readonly struct RecursiveOpAwaiter : IRecursiveCompletion
 {
     private readonly RecursiveOp _op;
 
