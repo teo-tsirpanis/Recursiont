@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT).
 // See LICENSE in the repository root for more information.
 
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -73,7 +74,7 @@ public struct AsyncRecursiveOpMethodBuilder<TResult>
         switch (task)
         {
             case null:
-                StateMachineBox<TStateMachine> newBox = new();
+                StateMachineBox<TStateMachine> newBox = StateMachineBox<TStateMachine>.RentFromPool();
                 newBox.BindRunner(runner);
                 task = newBox;
                 newBox.StateMachine = stateMachine;
@@ -136,8 +137,26 @@ public struct AsyncRecursiveOpMethodBuilder<TResult>
 
     private sealed class StateMachineBox<TStateMachine> : RecursiveTask<TResult> where TStateMachine : IAsyncStateMachine
     {
+        private static readonly ConcurrentBag<StateMachineBox<TStateMachine>> s_pool = new();
+
         public TStateMachine? StateMachine;
         public ExecutionContext? Context;
+
+        public static StateMachineBox<TStateMachine> RentFromPool()
+        {
+            if (s_pool.TryTake(out StateMachineBox<TStateMachine>? stateMachine))
+            {
+                return stateMachine;
+            }
+
+            return new();
+        }
+
+        internal override void Reset()
+        {
+            base.Reset();
+            s_pool.Add(this);
+        }
 
         internal override void Run()
         {
