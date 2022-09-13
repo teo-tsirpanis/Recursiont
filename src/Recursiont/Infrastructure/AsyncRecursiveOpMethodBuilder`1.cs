@@ -73,7 +73,8 @@ public struct AsyncRecursiveOpMethodBuilder<TResult>
         switch (task)
         {
             case null:
-                StateMachineBox<TStateMachine> newBox = new(runner);
+                StateMachineBox<TStateMachine> newBox = new();
+                newBox.BindRunner(runner);
                 task = newBox;
                 newBox.StateMachine = stateMachine;
                 newBox.Context = executionContext;
@@ -137,8 +138,6 @@ public struct AsyncRecursiveOpMethodBuilder<TResult>
     {
         public TStateMachine? StateMachine;
         public ExecutionContext? Context;
-
-        public StateMachineBox(RecursiveRunner runner) : base(runner) { }
 
         internal override void Run()
         {

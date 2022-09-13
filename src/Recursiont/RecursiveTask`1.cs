@@ -10,8 +10,6 @@ internal abstract class RecursiveTask<TResult> : RecursiveTask
 {
     private TResult? _result;
 
-    internal RecursiveTask(RecursiveRunner runner) : base(runner) { }
-
     internal RecursiveOp<TResult> AsTypedRecursiveOp() => new(this, Token);
 
     internal TResult GetTypedResult(ushort token)

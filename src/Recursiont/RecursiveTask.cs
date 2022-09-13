@@ -32,8 +32,6 @@ internal abstract class RecursiveTask : RecursiveWorkItem
     [MemberNotNullWhen(true, nameof(_completionObject))]
     internal bool IsCompleted => _completionObject is not null;
 
-    internal RecursiveTask(RecursiveRunner runner) : base(runner) { }
-
     internal RecursiveOp AsRecursiveOp() => new(this, Token);
 
     internal bool GetIsCompleted(ushort token)
@@ -71,8 +69,9 @@ internal abstract class RecursiveTask : RecursiveWorkItem
         }
     }
 
-    internal virtual void Reset()
+    internal override void Reset()
     {
+        base.Reset();
         Token++;
         _continuation = null;
         _completionObject = null;

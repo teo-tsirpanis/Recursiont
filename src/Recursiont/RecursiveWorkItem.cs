@@ -2,15 +2,32 @@
 // Licensed under the MIT License (MIT).
 // See LICENSE in the repository root for more information.
 
+using System.Diagnostics;
+
 namespace Recursiont;
 
 internal abstract class RecursiveWorkItem
 {
-    public RecursiveRunner Runner { get; }
+    private RecursiveRunner? _runner;
 
-    internal RecursiveWorkItem(RecursiveRunner runner)
+    public RecursiveRunner Runner
     {
-        Runner = runner;
+        get
+        {
+            Debug.Assert(_runner is not null);
+            return _runner!;
+        }
+    }
+
+    internal void BindRunner(RecursiveRunner runner)
+    {
+        Debug.Assert(_runner is null);
+        _runner = runner;
+    }
+
+    internal virtual void Reset()
+    {
+        _runner = null;
     }
 
     internal abstract void Run();
