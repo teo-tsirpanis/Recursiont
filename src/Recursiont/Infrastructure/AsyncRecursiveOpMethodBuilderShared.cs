@@ -26,9 +26,4 @@ internal static class AsyncRecursiveOpMethodBuilderShared
         }
         ThrowHelpers.ThrowRecursiveOpInvalidUse();
     }
-
-    internal static void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine =>
-         // It does some ExecutionContext trickery that can't be done from
-         // public APIs. Let's just hope the method remains stateless.
-         new AsyncTaskMethodBuilder().Start(ref stateMachine);
 }

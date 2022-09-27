@@ -73,7 +73,6 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
     internal static RecursiveTask<TResult> GetStateMachineBox<TStateMachine>(ref TStateMachine stateMachine, [NotNull] ref object? task, RecursiveRunner runner)
         where TStateMachine : IAsyncStateMachine
     {
-        ExecutionContext? executionContext = ExecutionContext.Capture();
         switch (task)
         {
             case null:
@@ -81,10 +80,8 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
                 newBox.BindRunner(runner);
                 task = newBox;
                 newBox.StateMachine = stateMachine;
-                newBox.Context = executionContext;
                 return newBox;
             case StateMachineBox<TStateMachine> box:
-                box.Context = executionContext;
                 return box;
             default:
                 ThrowHelpers.ThrowRecursiveOpInvalidUse();
@@ -100,7 +97,7 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
         // create a state machine and queue it to the runner.
         if (RuntimeHelpersCompat.TryEnsureSufficientExecutionStack())
         {
-            AsyncRecursiveOpMethodBuilderShared.Start(ref stateMachine);
+            stateMachine.MoveNext();
         }
         else
         {
@@ -143,7 +140,6 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
         private static readonly ConcurrentBag<StateMachineBox<TStateMachine>> s_pool = InitializePoolAndTrimming();
 
         public TStateMachine? StateMachine;
-        public ExecutionContext? Context;
 
         private static ConcurrentBag<StateMachineBox<TStateMachine>> InitializePoolAndTrimming()
         {
@@ -175,23 +171,12 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
 
         internal override void Run()
         {
-            if (Context is null)
-            {
-                Debug.Assert(StateMachine is not null);
-                StateMachine!.MoveNext();
-            }
-            else
-            {
-                ExecutionContext.Run(Context, static x =>
-                {
-                    ((StateMachineBox<TStateMachine>)x!).StateMachine!.MoveNext();
-                }, this);
-            }
+            Debug.Assert(StateMachine is not null);
+            StateMachine!.MoveNext();
 
             if (IsCompleted)
             {
                 StateMachine = default;
-                Context = null;
             }
         }
     }

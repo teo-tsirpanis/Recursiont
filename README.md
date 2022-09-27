@@ -163,6 +163,32 @@ Using Recursion't comes with a set of simple rules that you have to follow.
 
     > Unless you are doing things like recursive user callbacks, you don't have to expose recursive functions in a public API. You can create a public wrapper function that calls `RecursiveRunner.Run` and keep Recursion't as an implementation detail.
 
+*
+    __`AsyncLocal<T>` does not work.__ Imagine the following code:
+
+    ```csharp
+    RecursiveRunner.Run(A);
+    Console.WriteLine(_local.Value);
+
+    static readonly AsyncLocal<int> _local = new AsyncLocal<int>();
+
+    static async RecursiveOp A()
+    {
+        _local.Value = 0;
+        Console.WriteLine(_local.Value);
+        await B();
+        Console.WriteLine(_local.Value);
+    }
+
+    static async RecursiveOp B()
+    {
+        _local.Value = 1;
+        Console.WriteLine(_local.Value);
+    }
+    ```
+
+    According to the normal rules around `AsyncLocal`, the code above would print `0 1 0 0`. But here it will print `0 1 1 1`. For performance reasons Recursion't does not flow the `ExecutionContext` which means that values in `AsyncLocal` objects will behave like ordinary fields. This should not be a problem since as we said before multiple async flows are not a thing in Recursion't. Recursive functions should not rely on `AsyncLocal` but pass values as parameters instead.
+
 ## Maintainer(s)
 
 - [@teo-tsirpanis](https://github.com/teo-tsirpanis)
