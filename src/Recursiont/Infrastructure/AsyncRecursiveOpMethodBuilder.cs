@@ -25,20 +25,26 @@ struct AsyncRecursiveOpMethodBuilder
     /// <inheritdoc cref="AsyncRecursiveOpMethodBuilder"/>
     public RecursiveOp Task
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
             if (_task == AsyncRecursiveOpMethodBuilderShared.s_completionSentinel)
             {
                 return RecursiveOp.CompletedOp;
             }
-            switch (_task)
-            {
-                case RecursiveTask task: return task.AsRecursiveOp();
-                case ExceptionDispatchInfo edi: return RecursiveOp.FromException(edi);
-                default:
-                    ThrowHelpers.ThrowRecursiveOpInvalidUse();
-                    return default;
-            }
+            return GetTaskSlow();
+        }
+    }
+
+    private RecursiveOp GetTaskSlow()
+    {
+        switch (_task)
+        {
+            case RecursiveTask task: return task.AsRecursiveOp();
+            case ExceptionDispatchInfo edi: return RecursiveOp.FromException(edi);
+            default:
+                ThrowHelpers.ThrowRecursiveOpInvalidUse();
+                return default;
         }
     }
 
