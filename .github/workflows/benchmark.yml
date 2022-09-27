@@ -1,0 +1,24 @@
+name: Benchmark
+on:
+  workflow_dispatch:
+    inputs:
+      filter:
+        description: Filter which benchmarks to run with a wildcard.
+        required: false
+        default: '*'
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+      - name: Run benchmarks
+        run: dotnet run --project tests/Recursiont.Benchmarks/Recursiont.Benchmarks.csproj -c Release -- -f ${{ inputs.filter }} -e github -a ./benchmark-artifacts/
+      - name: Upload benchmark artifacts
+        uses: actions/upload-artifacts@3
+        with:
+          name: benchmark-artifacts
+          path: ./benchmark-artifacts
