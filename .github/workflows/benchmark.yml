@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
       - name: Run benchmarks
-        run: dotnet run --project tests/Recursiont.Benchmarks/Recursiont.Benchmarks.csproj -c Release -- -f ${{ inputs.filter }} -e github -a ./benchmark-artifacts/
+        run: dotnet run --project tests/Recursiont.Benchmarks/Recursiont.Benchmarks.csproj -c Release -- -f "${{ inputs.filter }}" -e github -a ./benchmark-artifacts/
       - name: Upload benchmark artifacts
         uses: actions/upload-artifact@v3
         with:
