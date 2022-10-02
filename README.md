@@ -46,7 +46,7 @@ using Recursiont;
 
 static uint Ackermann(uint m, uint n)
 {
-    return RecursiveRunner.Run(Impl, m, n);
+    return RecursiveRunner.Run(AckermannImpl, m, n);
 
     static async RecursiveOp<uint> AckermannImpl(uint m, uint n)
     {
