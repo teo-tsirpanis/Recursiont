@@ -51,6 +51,22 @@ public class ShallowRecursionBenchmark
         }
     }
 
+    [Benchmark]
+    public int ValueTask()
+    {
+        return Impl(N).GetAwaiter().GetResult();
+
+        static async ValueTask<int> Impl(uint n)
+        {
+            if (n == 0)
+            {
+                return 1;
+            }
+
+            return await Impl(n - 1) + await Impl(n - 1);
+        }
+    }
+
     [Benchmark(Baseline = true)]
     public int Recursiont()
     {
