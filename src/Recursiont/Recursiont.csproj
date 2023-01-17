@@ -32,6 +32,5 @@
     <!-- .NET Standard 2.0 does not have inbox AsyncMethodBuilderAttribute. -->
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <ProjectReference Include="..\Recursiont.Internal.SourceGenerators\Recursiont.Internal.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <Using Include="Recursiont.Infrastructure" />
   </ItemGroup>
 </Project>
