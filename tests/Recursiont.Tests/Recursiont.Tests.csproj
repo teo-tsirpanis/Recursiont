@@ -10,7 +10,7 @@
     <!-- Use a new Newtonsoft.Json version to avoid adding .NET Standard 1.x dependencies. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageReference Include="NunitXml.TestLogger" Version="3.0.131" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
