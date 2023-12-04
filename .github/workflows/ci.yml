@@ -22,7 +22,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
       - name: Run tests (Debug)
         uses: zyborg/dotnet-tests-report@v1
         with:
@@ -50,7 +50,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
       - name: Pack
         run: dotnet pack -c Release -o ./pack -p:VersionSuffix=ci.${{ github.run_number }}
       - name: Push packages
