@@ -39,21 +39,3 @@ jobs:
           msbuild_configuration: Release
           report_name: recursiont_tests_release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-  publish-nightly:
-    name: Publish nightly packages
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    timeout-minutes: 30
-    needs: test
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-      - name: Pack
-        run: dotnet pack -c Release -o ./pack -p:VersionSuffix=ci.${{ github.run_number }}
-      - name: Push packages
-        run: dotnet nuget push "./pack/*.nupkg" --skip-duplicate --source "https://nuget.pkg.github.com/teo-tsirpanis/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
-      - name: Push symbol packages
-        run: dotnet nuget push "./pack/*.snupkg" --skip-duplicate --source "https://nuget.pkg.github.com/teo-tsirpanis/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
