@@ -110,6 +110,11 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
         }
         else
         {
+            RecursiontEventSource log = RecursiontEventSource.Log;
+            if (log.IsEnabled())
+            {
+                log.RecursiveOpStackSpill<TStateMachine>();
+            }
             RecursiveWorkItem workItem = GetStateMachineBox(ref stateMachine, ref task, runner);
             runner.QueueWorkItem(workItem);
         }

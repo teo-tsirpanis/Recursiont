@@ -66,6 +66,11 @@ sealed partial class RecursiveRunner
         finally
         {
             Reset();
+            RecursiontEventSource log = RecursiontEventSource.Log;
+            if (log.IsEnabled())
+            {
+                log.RecursiveOpStop();
+            }
         }
     }
 
@@ -85,6 +90,11 @@ sealed partial class RecursiveRunner
         finally
         {
             Reset();
+            RecursiontEventSource log = RecursiontEventSource.Log;
+            if (log.IsEnabled())
+            {
+                log.RecursiveOpStop();
+            }
         }
     }
 
@@ -130,7 +140,15 @@ sealed partial class RecursiveRunner
         }
     }
 
-    private static CurrentRunnerScope SetupRunnerFrame() => new(RentFromCache());
+    private static CurrentRunnerScope SetupRunnerFrame()
+    {
+        RecursiontEventSource log = RecursiontEventSource.Log;
+        if (log.IsEnabled())
+        {
+            log.RecursiveOpStart();
+        }
+        return new(RentFromCache());
+    }
 
     internal void ValidateSameRunner(RecursiveRunner otherRunner)
     {
