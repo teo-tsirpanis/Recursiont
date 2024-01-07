@@ -15,8 +15,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
+      - name: Add nightly pack options
+        if: github.event_name != 'release'
+        id: pack-options-nightly
+        run: echo "value=--version-suffix nightly.${{ github.run_number }}" >> $GITHUB_OUTPUT
       - name: Pack
-        run: dotnet pack -c Release -o ./pack --version-suffix ${{ github.sha }}
+        run: dotnet pack -c Release -o ./pack ${{ steps.pack-options-nightly.outputs.value }}
       - name: Upload package artifacts
         uses: actions/upload-artifact@v4
         with:
