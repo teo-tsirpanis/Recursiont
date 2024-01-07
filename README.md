@@ -8,9 +8,9 @@ Recursion't is a C# library that allows efficiently implementing recursive algor
 
 ## Features
 
-* ~~__Lightweight until you need it.__ If recursion in a function does not go too deep, Recursion't will have minimal overhead.~~ Initial benchmarks have shown that on simple cases Recursion't's overhead is significant. Releasing the library on NuGet is delayed until they are resolved or it is realized that on real-world cases the overhead is negligible.
-* __Single-threaded.__ A common way to tackle infinite recursion is by keeping recursing in a different thread. Recursion't runs entirely in one thread.
-* __Memory-efficient.__ Recursion't uses techniques like object pooling to keep steady-state memory allocations low.
+* __Lightweight__ If recursion in a function does not go too deep, Recursion't will not allocate.
+* __Single-threaded__ A common way to tackle infinite recursion is by keeping recursing in a different thread. Recursion't runs entirely in one thread.
+* __Memory-efficient__ Recursion't uses techniques like object pooling to keep steady-state memory allocations low.
 
 ## How to use
 
