@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
       - name: Pack
-        run: dotnet pack -c Release -o ./pack
+        run: dotnet pack -c Release -o ./pack --version-suffix ${{ github.sha }}
       - name: Upload package artifacts
         uses: actions/upload-artifact@v4
         with:
