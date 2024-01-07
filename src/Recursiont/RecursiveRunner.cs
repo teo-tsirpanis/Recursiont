@@ -3,7 +3,6 @@
 // See LICENSE in the repository root for more information.
 
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace Recursiont;
 
