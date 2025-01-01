@@ -9,11 +9,11 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <!-- Use a new Newtonsoft.Json version to avoid adding .NET Standard 1.x dependencies. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.4.0" />
-    <PackageReference Include="NunitXml.TestLogger" Version="4.1.0" />
-    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.5.0" />
+    <PackageReference Include="NunitXml.TestLogger" Version="5.0.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Recursiont\Recursiont.csproj" />
