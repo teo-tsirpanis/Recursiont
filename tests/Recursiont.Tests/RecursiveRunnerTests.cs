@@ -60,6 +60,24 @@ internal class RecursiveRunnerTests
         };
     }
 
+    [TestCase(0, ExpectedResult = 1)]
+    [TestCase(5, ExpectedResult = 0)]
+    [TestCase(10, ExpectedResult = -67)]
+    [TestCase(16, ExpectedResult = -7244)]
+    public int ManOrBoy(int k)
+    {
+        return RecursiveRunner.Run(A, k, C(1), C(-1), C(-1), C(1), C(0));
+
+        static Func<RecursiveOp<int>> C(int i) => () => RecursiveOp.FromResult(i);
+
+        static async RecursiveOp<int> A(int k, Func<RecursiveOp<int>> x1, Func<RecursiveOp<int>> x2, Func<RecursiveOp<int>> x3, Func<RecursiveOp<int>> x4, Func<RecursiveOp<int>> x5)
+        {
+            RecursiveOp<int> b() { k--; return A(k, b, x1, x2, x3, x4); }
+
+            return k <= 0 ? await x4() + await x5() : await b();
+        }
+    }
+
     [Test]
     public void EnforcesAwaitingImmediately()
     {

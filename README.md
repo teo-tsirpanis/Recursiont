@@ -22,48 +22,45 @@ You can convert a recursive function to use Recursion't by following these steps
 4. `await` the recursive calls.
 5. Create a helper function that uses `RecursiveRunner.Run` that serves as the entry point for your recursive function.
 
-To see an example, imagine the following recursive function that computes the [Ackermann function](https://en.wikipedia.org/wiki/Ackermann_function):
+To see an example, imagine the following recursive function that implements [Knuth's man or boy test](https://en.wikipedia.org/wiki/Man_or_boy_test):
 
 ```csharp
-static uint Ackermann(uint m, uint n)
+static int ManOrBoy(int k)
 {
-    if (m == 0)
+    return A(k, C(1), C(-1), C(-1), C(1), C(0));
+
+    static Func<int> C(int i) => () => i;
+
+    static int A(int k, Func<int> x1, Func<int> x2, Func<int> x3, Func<int> x4, Func<int> x5)
     {
-        return n + 1;
+        int b() { k--; return A(k, b, x1, x2, x3, x4); }
+
+        return k <= 0 ? x4() + x5() : b();
     }
-    if (n == 0)
-    {
-        return Ackermann(m - 1, 1);
-    }
-    return Ackermann(m - 1, Ackermann(m, n - 1));
 }
 ```
 
-If you call `Ackermann(4, 1)` your code will crash with a stack overflow. Here's the same function, rewritten to use Recursion't:
+If you call `ManOrBoy(15)`, your code will likely crash with a stack overflow. Here's the same function, rewritten to use Recursion't:
 
 ```csharp
 using Recursiont;
 
-static uint Ackermann(uint m, uint n)
+static int ManOrBoy(int k)
 {
-    return RecursiveRunner.Run(AckermannImpl, m, n);
+    return RecursiveRunner.Run(A, k, C(1), C(-1), C(-1), C(1), C(0));
 
-    static async RecursiveOp<uint> AckermannImpl(uint m, uint n)
+    static Func<RecursiveOp<int>> C(int i) => () => RecursiveOp.FromResult(i);
+
+    static async RecursiveOp<int> A(int k, Func<RecursiveOp<int>> x1, Func<RecursiveOp<int>> x2, Func<RecursiveOp<int>> x3, Func<RecursiveOp<int>> x4, Func<RecursiveOp<int>> x5)
     {
-        if (m == 0)
-        {
-            return n + 1;
-        }
-        if (n == 0)
-        {
-            return await AckermannImpl(m - 1, 1);
-        }
-        return await AckermannImpl(m - 1, await AckermannImpl(m, n - 1));
+        RecursiveOp<int> b() { k--; return A(k, b, x1, x2, x3, x4); }
+
+        return k <= 0 ? await x4() + await x5() : await b();
     }
 }
 ```
 
-Now, calling `Ackermann(4, 1)` will not cause stack overflows but will still take an extraordinary amount of time to complete.
+Now, calling `ManOrBoy(15)` will return $-3250$.
 
 `RecursiveRunner.Run` has overloads that accept functions with up to six parameters. If your function has more you can create a lambda that accepts a tuple:
 
