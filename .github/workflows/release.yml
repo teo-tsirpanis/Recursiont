@@ -29,6 +29,8 @@ jobs:
   release:
     needs: pack
     environment: ${{ github.event_name == 'release' && 'release' || 'nightly' }}
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
