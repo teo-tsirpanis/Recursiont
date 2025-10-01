@@ -14,7 +14,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
       - name: Add nightly pack options
         if: github.event_name != 'release'
         id: pack-options-nightly
@@ -36,7 +36,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
       - name: Obtain NuGet API token
         uses: nuget/login@v1
         id: nuget-login
