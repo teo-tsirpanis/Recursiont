@@ -7,19 +7,20 @@ using System.Runtime.CompilerServices;
 
 internal static class RuntimeHelpersCompat
 {
-    public static bool TryEnsureSufficientExecutionStack()
+    extension(RuntimeHelpers)
     {
-        try
+        public static bool TryEnsureSufficientExecutionStack()
         {
-            RuntimeHelpers.EnsureSufficientExecutionStack();
-            return true;
-        }
-        catch (InsufficientExecutionStackException)
-        {
-            return false;
+            try
+            {
+                RuntimeHelpers.EnsureSufficientExecutionStack();
+                return true;
+            }
+            catch (InsufficientExecutionStackException)
+            {
+                return false;
+            }
         }
     }
 }
-#else
-global using RuntimeHelpersCompat = System.Runtime.CompilerServices.RuntimeHelpers;
 #endif

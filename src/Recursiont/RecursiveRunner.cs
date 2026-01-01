@@ -3,6 +3,7 @@
 // See LICENSE in the repository root for more information.
 
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Recursiont;
 
@@ -108,7 +109,7 @@ sealed partial class RecursiveRunner
         // If we are running a task's continuation we might have enough
         // stack space to directly run it instead of queueing it.
         // This optimization has to be disabled when awaiting RecursiveOp.Yield().
-        if (!yielding && RuntimeHelpersCompat.TryEnsureSufficientExecutionStack())
+        if (!yielding && RuntimeHelpers.TryEnsureSufficientExecutionStack())
         {
             workItem.Run();
             return;

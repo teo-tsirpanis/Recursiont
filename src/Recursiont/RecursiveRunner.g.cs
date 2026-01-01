@@ -16,7 +16,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run(Func<RecursiveOp> recursiveAction)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -33,7 +33,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<TResult>(Func<RecursiveOp<TResult>> recursiveFunc)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -51,7 +51,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1>(Func<T1, RecursiveOp> recursiveAction, T1 arg1)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -69,7 +69,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, TResult>(Func<T1, RecursiveOp<TResult>> recursiveFunc, T1 arg1)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -88,7 +88,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2>(Func<T1, T2, RecursiveOp> recursiveAction, T1 arg1, T2 arg2)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -107,7 +107,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, TResult>(Func<T1, T2, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -127,7 +127,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3>(Func<T1, T2, T3, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -147,7 +147,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, TResult>(Func<T1, T2, T3, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -168,7 +168,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3, T4>(Func<T1, T2, T3, T4, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -189,7 +189,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, T4, TResult>(Func<T1, T2, T3, T4, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -211,7 +211,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -233,7 +233,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, T4, T5, TResult>(Func<T1, T2, T3, T4, T5, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -256,7 +256,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveAction);
+        ArgumentNullException.ThrowIfNull(recursiveAction);
 
         using (var ctx = SetupRunnerFrame())
         {
@@ -279,7 +279,7 @@ partial class RecursiveRunner
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, T4, T5, T6, TResult>(Func<T1, T2, T3, T4, T5, T6, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(recursiveFunc);
+        ArgumentNullException.ThrowIfNull(recursiveFunc);
 
         using (var ctx = SetupRunnerFrame())
         {

@@ -104,7 +104,7 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
         // That's the magic of Recursion't. If we have enough stack space,
         // we can use normal recursion, until we go too deep, where we
         // create a state machine and queue it to the runner.
-        if (RuntimeHelpersCompat.TryEnsureSufficientExecutionStack())
+        if (RuntimeHelpers.TryEnsureSufficientExecutionStack())
         {
             AsyncRecursiveOpMethodBuilderShared.Start(ref stateMachine);
         }
@@ -126,7 +126,7 @@ struct AsyncRecursiveOpMethodBuilder<TResult>
 
     /// <inheritdoc cref="AsyncRecursiveOpMethodBuilder{TResult}"/>
     public void SetStateMachine(IAsyncStateMachine stateMachine) =>
-        ArgumentNullExceptionCompat.ThrowIfNull(stateMachine);
+        ArgumentNullException.ThrowIfNull(stateMachine);
 
     /// <inheritdoc cref="AsyncRecursiveOpMethodBuilder{TResult}"/>
     public void SetResult(TResult result)

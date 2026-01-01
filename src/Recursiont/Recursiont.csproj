@@ -5,7 +5,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>14</LangVersion>
     <IsTrimmable>true</IsTrimmable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>true</EnablePackageValidation>

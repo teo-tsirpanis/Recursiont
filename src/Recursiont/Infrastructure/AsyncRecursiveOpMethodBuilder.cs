@@ -76,7 +76,7 @@ struct AsyncRecursiveOpMethodBuilder
 
     /// <inheritdoc cref="AsyncRecursiveOpMethodBuilder"/>
     public void SetStateMachine(IAsyncStateMachine stateMachine) =>
-        ArgumentNullExceptionCompat.ThrowIfNull(stateMachine);
+        ArgumentNullException.ThrowIfNull(stateMachine);
 
     /// <inheritdoc cref="AsyncRecursiveOpMethodBuilder"/>
     public void SetResult()

@@ -78,7 +78,7 @@ readonly struct RecursiveOp
     /// <exception cref="ArgumentNullException"><paramref name="exception"/> is <see langword="null"/>.</exception>
     public static RecursiveOp FromException(Exception exception)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(exception);
+        ArgumentNullException.ThrowIfNull(exception);
         return new(ExceptionDispatchInfo.Capture(exception), 0);
     }
 
@@ -92,7 +92,7 @@ readonly struct RecursiveOp
     /// <exception cref="ArgumentNullException"><paramref name="exception"/> is <see langword="null"/>.</exception>
     public static RecursiveOp<TResult> FromException<TResult>(Exception exception)
     {
-        ArgumentNullExceptionCompat.ThrowIfNull(exception);
+        ArgumentNullException.ThrowIfNull(exception);
         return new(ExceptionDispatchInfo.Capture(exception), 0);
     }
 

@@ -8,20 +8,21 @@ using System.Runtime.CompilerServices;
 
 internal static class ArgumentNullExceptionCompat
 {
-    public static void ThrowIfNull([NotNull] object? argument, [CallerArgumentExpression("argument")] string? paramName = null)
+    extension(ArgumentNullException)
     {
-        if (argument is null)
+        public static void ThrowIfNull([NotNull] object? argument, [CallerArgumentExpression("argument")] string? paramName = null)
         {
-            Throw(paramName);
+            if (argument is null)
+            {
+                Throw(paramName);
+            }
+
+            [DoesNotReturn]
+            static void Throw(string? paramName)
+            {
+                throw new ArgumentNullException(paramName);
+            }
         }
     }
-
-    [DoesNotReturn]
-    private static void Throw(string? paramName)
-    {
-        throw new ArgumentNullException(paramName);
-    }
 }
-#else
-global using ArgumentNullExceptionCompat = System.ArgumentNullException;
 #endif

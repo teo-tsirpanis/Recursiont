@@ -47,7 +47,7 @@ public sealed class RecursiveRunnerRunGenerator : IIncrementalGenerator
         writer.WriteLine($"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
         using (EnterBlock(writer, $"public static {returnType} Run{methodGenericParams}(Func<{funcGenericParams}> {funcParamName}{funcArgumentDefinitions})"))
         {
-            writer.WriteLine($"ArgumentNullExceptionCompat.ThrowIfNull({funcParamName});");
+            writer.WriteLine($"ArgumentNullException.ThrowIfNull({funcParamName});");
             writer.WriteLine();
             using (EnterBlock(writer, $"using (var ctx = SetupRunnerFrame())"))
             {
