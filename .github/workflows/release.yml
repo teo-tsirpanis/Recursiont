@@ -22,7 +22,7 @@ jobs:
       - name: Pack
         run: dotnet pack -c Release -o ./pack ${{ steps.pack-options-nightly.outputs.value }}
       - name: Upload package artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: nuget-packages
           path: ./pack
@@ -44,7 +44,7 @@ jobs:
           user: ${{ vars.NUGET_USER }}
         if: vars.NUGET_USER != ''
       - name: Download package artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: nuget-packages
           path: ./pack
