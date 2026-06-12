@@ -57,7 +57,7 @@ readonly struct RecursiveOp
         {
             // Should not be called on completed ops.
             Debug.Assert(_taskOrEdi is RecursiveTask);
-            return ((RecursiveTask)_taskOrEdi!).Runner;
+            return ((RecursiveTask)_taskOrEdi).Runner;
         }
     }
 

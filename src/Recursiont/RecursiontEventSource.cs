@@ -35,7 +35,7 @@ internal sealed class RecursiontEventSource : EventSource
     [NonEvent]
     public void RecursiveOpStackSpill<TStateMachine>()
     {
-        RecursiveOpStackSpill(typeof(TStateMachine).FullName!);
+        RecursiveOpStackSpill(typeof(TStateMachine).FullName);
     }
 
     public static class Keywords
