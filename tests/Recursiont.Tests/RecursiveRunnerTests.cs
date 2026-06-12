@@ -81,7 +81,7 @@ internal class RecursiveRunnerTests
     [Test]
     public void EnforcesAwaitingImmediately()
     {
-        Assert.Throws<InvalidOperationException>(() => RecursiveRunner.Run(Impl, true));
+        Assert.That(() => RecursiveRunner.Run(Impl, true), Throws.InvalidOperationException);
 
         static async RecursiveOp Impl(bool doRecurse)
         {
