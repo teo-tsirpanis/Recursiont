@@ -24,18 +24,8 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
       - name: Run tests (Debug)
-        uses: zyborg/dotnet-tests-report@v1
-        with:
-          project_path: tests/Recursiont.Tests
-          msbuild_configuration: Debug
-          report_name: recursiont_tests_debug
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet test -c Debug
       # We need to run the tests in both Debug and release mode to uncover
       # possible subtle bugs around the state machines being classes vs structs.
       - name: Run tests (Release)
-        uses: zyborg/dotnet-tests-report@v1
-        with:
-          project_path: tests/Recursiont.Tests
-          msbuild_configuration: Release
-          report_name: recursiont_tests_release
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet test -c Release
