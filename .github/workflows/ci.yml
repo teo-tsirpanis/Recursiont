@@ -22,7 +22,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v7
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
       - name: Run tests (Debug)
         run: dotnet test -c Debug
       # We need to run the tests in both Debug and release mode to uncover
