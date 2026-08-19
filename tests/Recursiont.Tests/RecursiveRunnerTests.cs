@@ -100,32 +100,41 @@ internal class RecursiveRunnerTests
     public void RunOverloadsAvailable()
     {
         // The Run overloads are source-generated; we just want to ensure they exist.
+
+        // Test allows ref struct on supported frameworks.
+        var span =
+#if NET9_0_OR_GREATER
+            ReadOnlySpan<int>.Empty;
+#else
+            0;
+#endif
+
         RecursiveRunner.Run(() => RecursiveOp.CompletedOp);
         int result = RecursiveRunner.Run(() => RecursiveOp.FromResult(5));
         Assert.That(result, Is.EqualTo(5));
 
-        RecursiveRunner.Run(_ => RecursiveOp.CompletedOp, 0);
-        result = RecursiveRunner.Run(_ => RecursiveOp.FromResult(5), 0);
+        RecursiveRunner.Run(_ => RecursiveOp.CompletedOp, span);
+        result = RecursiveRunner.Run(_ => RecursiveOp.FromResult(5), span);
         Assert.That(result, Is.EqualTo(5));
 
-        RecursiveRunner.Run((_, _) => RecursiveOp.CompletedOp, 0, 0);
-        result = RecursiveRunner.Run((_, _) => RecursiveOp.FromResult(5), 0, 0);
+        RecursiveRunner.Run((_, _) => RecursiveOp.CompletedOp, 0, span);
+        result = RecursiveRunner.Run((_, _) => RecursiveOp.FromResult(5), 0, span);
         Assert.That(result, Is.EqualTo(5));
 
-        RecursiveRunner.Run((_, _, _) => RecursiveOp.CompletedOp, 0, 0, 0);
-        result = RecursiveRunner.Run((_, _, _) => RecursiveOp.FromResult(5), 0, 0, 0);
+        RecursiveRunner.Run((_, _, _) => RecursiveOp.CompletedOp, 0, 0, span);
+        result = RecursiveRunner.Run((_, _, _) => RecursiveOp.FromResult(5), 0, 0, span);
         Assert.That(result, Is.EqualTo(5));
 
-        RecursiveRunner.Run((_, _, _, _) => RecursiveOp.CompletedOp, 0, 0, 0, 0);
-        result = RecursiveRunner.Run((_, _, _, _) => RecursiveOp.FromResult(5), 0, 0, 0, 0);
+        RecursiveRunner.Run((_, _, _, _) => RecursiveOp.CompletedOp, 0, 0, 0, span);
+        result = RecursiveRunner.Run((_, _, _, _) => RecursiveOp.FromResult(5), 0, 0, 0, span);
         Assert.That(result, Is.EqualTo(5));
 
-        RecursiveRunner.Run((_, _, _, _, _) => RecursiveOp.CompletedOp, 0, 0, 0, 0, 0);
-        result = RecursiveRunner.Run((_, _, _, _, _) => RecursiveOp.FromResult(5), 0, 0, 0, 0, 0);
+        RecursiveRunner.Run((_, _, _, _, _) => RecursiveOp.CompletedOp, 0, 0, 0, 0, span);
+        result = RecursiveRunner.Run((_, _, _, _, _) => RecursiveOp.FromResult(5), 0, 0, 0, 0, span);
         Assert.That(result, Is.EqualTo(5));
 
-        RecursiveRunner.Run((_, _, _, _, _, _) => RecursiveOp.CompletedOp, 0, 0, 0, 0, 0, 0);
-        result = RecursiveRunner.Run((_, _, _, _, _, _) => RecursiveOp.FromResult(5), 0, 0, 0, 0, 0, 0);
+        RecursiveRunner.Run((_, _, _, _, _, _) => RecursiveOp.CompletedOp, 0, 0, 0, 0, 0, span);
+        result = RecursiveRunner.Run((_, _, _, _, _, _) => RecursiveOp.FromResult(5), 0, 0, 0, 0, 0, span);
         Assert.That(result, Is.EqualTo(5));
     }
 }

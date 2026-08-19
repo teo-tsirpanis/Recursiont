@@ -45,7 +45,19 @@ public sealed class RecursiveRunnerRunGenerator : IIncrementalGenerator
         string returnType = returnsResult ? ResultGenericType : "void";
         string funcParamName = returnsResult ? "recursiveFunc" : "recursiveAction";
         writer.WriteLine($"[MethodImpl(MethodImplOptions.AggressiveInlining)]");
-        using (EnterBlock(writer, $"public static {returnType} Run{methodGenericParams}(Func<{funcGenericParams}> {funcParamName}{funcArgumentDefinitions})"))
+        writer.WriteLine($"public static {returnType} Run{methodGenericParams}(Func<{funcGenericParams}> {funcParamName}{funcArgumentDefinitions})");
+        if (parameterCount > 0)
+        {
+            writer.WriteLineNoTabs("#if NET9_0_OR_GREATER");
+            writer.Indent++;
+            for (int i = 1; i <= parameterCount; i++)
+            {
+                writer.WriteLine($"where T{i} : allows ref struct");
+            }
+            writer.Indent--;
+            writer.WriteLineNoTabs("#endif");
+        }
+        using (EnterBlock(writer))
         {
             writer.WriteLine($"ArgumentNullException.ThrowIfNull({funcParamName});");
             writer.WriteLine();
@@ -53,7 +65,7 @@ public sealed class RecursiveRunnerRunGenerator : IIncrementalGenerator
             {
                 string returnMaybe = returnsResult ? "return " : string.Empty;
                 string funcArguments = string.Join(", ", argumentIndices.Select(static x => $"arg{x}"));
-                writer.WriteLine($"{returnMaybe} ctx.Runner.Evaluate({funcParamName}({funcArguments}));");
+                writer.WriteLine($"{returnMaybe}ctx.Runner.Evaluate({funcParamName}({funcArguments}));");
             }
         }
     }
@@ -85,9 +97,12 @@ public sealed class RecursiveRunnerRunGenerator : IIncrementalGenerator
         writer.WriteLine($"/// <exception cref=\"ArgumentNullException\"><paramref name=\"{funcParamName}\"/> is <see langword=\"null\"/>.</exception>");
     }
 
-    private static IndentationScope EnterBlock(IndentedTextWriter textWriter, string line)
+    private static IndentationScope EnterBlock(IndentedTextWriter textWriter, string line = "")
     {
-        textWriter.WriteLine(line);
+        if (line != "")
+        {
+            textWriter.WriteLine(line);
+        }
         return new(textWriter);
     }
 

@@ -50,6 +50,9 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveAction"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1>(Func<T1, RecursiveOp> recursiveAction, T1 arg1)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveAction);
 
@@ -68,6 +71,9 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveFunc"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, TResult>(Func<T1, RecursiveOp<TResult>> recursiveFunc, T1 arg1)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveFunc);
 
@@ -87,6 +93,10 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveAction"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2>(Func<T1, T2, RecursiveOp> recursiveAction, T1 arg1, T2 arg2)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveAction);
 
@@ -106,6 +116,10 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveFunc"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, TResult>(Func<T1, T2, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveFunc);
 
@@ -126,6 +140,11 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveAction"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3>(Func<T1, T2, T3, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveAction);
 
@@ -146,6 +165,11 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveFunc"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, TResult>(Func<T1, T2, T3, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveFunc);
 
@@ -167,6 +191,12 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveAction"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3, T4>(Func<T1, T2, T3, T4, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+        where T4 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveAction);
 
@@ -188,6 +218,12 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveFunc"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, T4, TResult>(Func<T1, T2, T3, T4, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+        where T4 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveFunc);
 
@@ -210,6 +246,13 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveAction"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+        where T4 : allows ref struct
+        where T5 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveAction);
 
@@ -232,6 +275,13 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveFunc"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, T4, T5, TResult>(Func<T1, T2, T3, T4, T5, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+        where T4 : allows ref struct
+        where T5 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveFunc);
 
@@ -255,6 +305,14 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveAction"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Run<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, RecursiveOp> recursiveAction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+        where T4 : allows ref struct
+        where T5 : allows ref struct
+        where T6 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveAction);
 
@@ -278,6 +336,14 @@ partial class RecursiveRunner
     /// <exception cref="ArgumentNullException"><paramref name="recursiveFunc"/> is <see langword="null"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TResult Run<T1, T2, T3, T4, T5, T6, TResult>(Func<T1, T2, T3, T4, T5, T6, RecursiveOp<TResult>> recursiveFunc, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+#if NET9_0_OR_GREATER
+        where T1 : allows ref struct
+        where T2 : allows ref struct
+        where T3 : allows ref struct
+        where T4 : allows ref struct
+        where T5 : allows ref struct
+        where T6 : allows ref struct
+#endif
     {
         ArgumentNullException.ThrowIfNull(recursiveFunc);
 
