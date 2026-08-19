@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Recursiont.Internal.SourceGenerators/Recursiont.Internal.SourceGenerators.csproj" />
+    <Project Path="src/Recursiont/Recursiont.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Recursiont.Benchmarks/Recursiont.Benchmarks.csproj" />
+    <Project Path="tests/Recursiont.Tests/Recursiont.Tests.csproj" />
+  </Folder>
+</Solution>
